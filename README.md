@@ -1,40 +1,13 @@
-# Logistics Factory Patterns
+# Logistics Factory Application
 
 ## Project Purpose
 
-This project demonstrates two creational design patterns in Java:
+This Java application demonstrates two creational design patterns:
 
-- Factory Method is used to create transport for road or sea delivery.
-- Abstract Factory is used to create matching Windows or macOS UI components.
+- **Factory Method** is used to create transport for road and sea delivery.
+- **Abstract Factory** is used to create matching Windows or macOS UI components.
 
-The application allows the user to choose a delivery mode and a UI platform at runtime.
-
-## Design Patterns
-
-### Factory Method
-
-The Factory Method pattern is used for logistics.
-
-- `Transport` - Product
-- `Truck`, `Ship` - Concrete Products
-- `Logistics` - Creator
-- `RoadLogistics`, `SeaLogistics` - Concrete Creators
-
-`Logistics` contains the shared `planDelivery()` workflow and uses
-`createTransport()` to obtain a transport.
-
-### Abstract Factory
-
-The Abstract Factory pattern is used for UI components.
-
-- `Button`, `Checkbox` - Abstract Products
-- `WindowsButton`, `WindowsCheckbox` - Windows Concrete Products
-- `MacOSButton`, `MacOSCheckbox` - macOS Concrete Products
-- `GUIFactory` - Abstract Factory
-- `WindowsFactory`, `MacOSFactory` - Concrete Factories
-
-`DeliveryApplication` receives `GUIFactory` and `Logistics`
-through its constructor and works with their abstractions.
+The user selects the delivery mode and UI platform at runtime.
 
 ## Project Structure
 
@@ -56,17 +29,76 @@ src/
     ├── Button.java
     ├── Checkbox.java
     ├── GUIFactory.java
-    │
     ├── windows/
     │   ├── WindowsFactory.java
     │   ├── WindowsButton.java
     │   └── WindowsCheckbox.java
-    │
     └── macos/
         ├── MacOSFactory.java
         ├── MacOSButton.java
         └── MacOSCheckbox.java
 
-uml/
+diagrams/
+├── factory method.png
+├── abstract factory.png
 ├── factory-method.puml
 └── abstract-factory.puml
+```
+
+## Prerequisites
+
+- Java JDK 26
+- IntelliJ IDEA or another Java IDE
+
+## Build and Run
+
+### IntelliJ IDEA
+
+1. Open the project in IntelliJ IDEA.
+2. Set the Project SDK to **JDK 17**.
+3. Open `src/app/Main.java`.
+4. Run the `Main` class.
+5. Enter the delivery mode and UI platform when prompted.
+
+### Terminal
+
+From the project root directory:
+
+```bash
+mkdir -p out
+javac -d out $(find src -name "*.java")
+java -cp out app.Main
+```
+
+## Supported Input Values
+
+Delivery mode:
+
+```text
+ROAD
+SEA
+```
+
+UI platform:
+
+```text
+WINDOWS
+MACOS
+```
+
+The application also accepts lowercase input because the entered values are converted to uppercase.
+
+Invalid or missing input displays a validation message and stops the application.
+
+## Sample Run
+
+```text
+Enter delivery mode (ROAD or SEA): ROAD
+Enter UI platform (WINDOWS or MACOS): WINDOWS
+
+Delivery mode: ROAD
+UI platform: WINDOWS
+Rendering Windows button
+Rendering Windows checkbox
+Truck delivers laboratory equipment to Aktau warehouse
+```
