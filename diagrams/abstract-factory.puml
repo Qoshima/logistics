@@ -1,0 +1,77 @@
+@startuml
+title Abstract Factory - GUI Components
+
+interface Button <<Abstract Product>> {
+    +paint(): void
+}
+
+interface Checkbox <<Abstract Product>> {
+    +paint(): void
+}
+
+interface GUIFactory <<Abstract Factory>> {
+    +createButton(): Button
+    +createCheckbox(): Checkbox
+}
+
+class WindowsButton <<Concrete Product>> {
+    +paint(): void
+}
+
+class WindowsCheckbox <<Concrete Product>> {
+    +paint(): void
+}
+
+class MacOSButton <<Concrete Product>> {
+    +paint(): void
+}
+
+class MacOSCheckbox <<Concrete Product>> {
+    +paint(): void
+}
+
+class WindowsFactory <<Concrete Factory>> {
+    +createButton(): Button
+    +createCheckbox(): Checkbox
+}
+
+class MacOSFactory <<Concrete Factory>> {
+    +createButton(): Button
+    +createCheckbox(): Checkbox
+}
+
+class DeliveryApplication <<Client>> {
+    -button: Button
+    -checkbox: Checkbox
+    -logistics: Logistics
+
+    +DeliveryApplication(guiFactory: GUIFactory, logistics: Logistics)
+    +run(cargo: String, destination: String): void
+}
+
+abstract class Logistics <<Factory Method Creator>> {
+    +createTransport(): Transport
+    +planDelivery(cargo: String, destination: String): void
+}
+
+Button <|.. WindowsButton
+Button <|.. MacOSButton
+
+Checkbox <|.. WindowsCheckbox
+Checkbox <|.. MacOSCheckbox
+
+GUIFactory <|.. WindowsFactory
+GUIFactory <|.. MacOSFactory
+
+WindowsFactory ..> WindowsButton : creates
+WindowsFactory ..> WindowsCheckbox : creates
+
+MacOSFactory ..> MacOSButton : creates
+MacOSFactory ..> MacOSCheckbox : creates
+
+DeliveryApplication --> Button : uses
+DeliveryApplication --> Checkbox : uses
+DeliveryApplication ..> GUIFactory : receives
+DeliveryApplication --> Logistics : uses
+
+@enduml
